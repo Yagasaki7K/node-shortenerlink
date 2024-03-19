@@ -6,11 +6,29 @@ import postgres from 'postgres'
 const app = fastify()
 const portNumber = 3000
 
-app.get('/', () => {
-    
+app.get('/:code', async (req, reply) => {
+    const getLinksSchema = z.object({
+        code: z.string().min(3),
+    })
+
+    const { code } = getLinksSchema.parse(req.params)
+
+    const result = await sql`
+        SELECT id, original_url
+        FROM shortlinks
+        WHERE short_links.code = ${code}
+    `
+
+    const link = result[0]
+
+    if (result.length === 0) {
+        return reply.status(400).send({ message: 'Link not found' })
+    }
+
+    return reply.redirect(301, link.original_url)
 })
 
-app.get('/links', async () => {
+app.get('/api/links', async () => {
     const result = await sql/*sql*/`
         SELECT *
         FROM shortlinks
@@ -20,11 +38,11 @@ app.get('/links', async () => {
     return result
 })
 
-app.post('/links', async (req, reply) => {
+app.post('/api/links', async (req, reply) => {
     const createLinkSchema = z.object({
         code: z.string().min(3),
         url: z.string().url(),
-    }).parse(req.body)
+    })
 
     // FIXME: Property 'parse' does not exist on type '{ url: string; code: string; }'.
     const { code, url } = createLinkSchema.parse(req.body)
@@ -55,5 +73,5 @@ app.post('/links', async (req, reply) => {
 app.listen({
     port: portNumber,
 }).then(() => {
-    console.log('Server is running on port ', portNumber)
+    console.log('Server is running on port', portNumber)
 })

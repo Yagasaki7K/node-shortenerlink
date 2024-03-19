@@ -1,6 +1,6 @@
 # GET https://localhost:3000/
 
-POST https://localhost:3000/links
+POST https://localhost:3000/api/links
 Content-Type: application/json
 
 {
@@ -10,4 +10,8 @@ Content-Type: application/json
 
 ### 
 
-GET https://localhost:3000/links
+GET https://localhost:3000/api/links
+
+###
+
+GET https://localhost:3000/yagasaki.dev
