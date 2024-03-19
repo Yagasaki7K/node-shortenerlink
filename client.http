@@ -15,3 +15,7 @@ GET https://localhost:3000/api/links
 ###
 
 GET https://localhost:3000/yagasaki.dev
+
+###
+
+GET https://localhost:3000/api/metrics
