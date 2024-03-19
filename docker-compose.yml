@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  postgress:
+    # Postgress
+    image: bitnami/postgresql:latest
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_PASSWORD=docker
+      - POSTGRES_USER=docker
+      - POSTGRES_DB=shortlinks
+
+redis:
+  image: bitname/redis:latest
+  ports:
+    - '6379:6379'
+  environment:
+    - REDIS_PASSWORD=mypassword
