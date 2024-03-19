@@ -1,1 +1,13 @@
-GET https://localhost:3000/
+# GET https://localhost:3000/
+
+POST https://localhost:3000/links
+Content-Type: application/json
+
+{
+    "code": "test",
+    "url": "https://yagasaki.dev/"
+}
+
+### 
+
+GET https://localhost:3000/links
